@@ -1,2 +1,4 @@
 .env
 db
+sh-for-db
+compose-for-debugging.yaml
