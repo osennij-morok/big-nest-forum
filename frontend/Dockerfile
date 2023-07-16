@@ -1,6 +1,7 @@
 FROM node:20-alpine AS build
 WORKDIR /opt/frontend
 COPY . .
+COPY ./.env ./.env
 RUN npm install --silent
 RUN npm install -g react-scripts --silent
 RUN npm run build

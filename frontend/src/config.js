@@ -3,9 +3,11 @@ const config = {
   serverHost: env('SERVER_HOST'),
   serverProtocol: env('SERVER_PROTOCOL'),
   allowUsersAuthentication: true,
-  hcaptchaSitekey: env('HCAPTCHA_SITEKEY'),
-  recaptchaSitekey: env('RECAPTCHA_SITEKEY'),
+  hcaptchaSitekey: env('HCAPTCHA_SITE_KEY'),
+  recaptchaSitekey: env('RECAPTCHA_SITE_KEY'),
   requireCaptcha: env('REQUIRE_CAPTCHA'),
+  environment1: import.meta.env,
+  // environment2: process?.env,
 }
 
 export default {
