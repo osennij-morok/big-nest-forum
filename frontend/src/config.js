@@ -6,8 +6,6 @@ const config = {
   hcaptchaSitekey: env('HCAPTCHA_SITE_KEY'),
   recaptchaSitekey: env('RECAPTCHA_SITE_KEY'),
   requireCaptcha: env('REQUIRE_CAPTCHA'),
-  environment1: import.meta.env,
-  // environment2: process?.env,
 }
 
 export default {

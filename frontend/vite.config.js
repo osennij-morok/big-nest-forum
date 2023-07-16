@@ -60,13 +60,8 @@ import react from '@vitejs/plugin-react-swc'
 //   }
 // })
 
-export default ({ command, mode }) => {
-  // const env = { ...process.env, ...loadEnv(mode, process.cwd(), "") }
+export default () => {
   return defineConfig({
-    // define: {
-    //   "process.env": env,
-    //   "import.meta.env": env,
-    // },
-    plugins: [react()],
+     plugins: [react()],
   });
 }
