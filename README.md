@@ -27,12 +27,11 @@ You have to create .env file with the folowing environment variables:
 * SERVER_PROTOCOL (http/https) - the protocol the frontend should use to connect to the backend
 * TOKEN_SIGNING_PASSWORD - the password used for signing and verification of JWT-tokens
 * POSTGRES_PASSWORD - the password for the user `postgres` to connect to the database
+* FRONTEND_PORT - the port to access the frontend
 
 Every line of the .env file must have the format *VARIABLE_NAME=variable-value*.
 
 # Building and running
-
-In order to compile and run the application you need to run the only command:
 
 Build the backend separately. You can use my script:
 
@@ -52,7 +51,7 @@ Build and run the application:
 docker compose up -d
 ```
 
-After that you can access the app on port `3300`.
+After that you can access the app on port specified in `.env` as `FRONTEND_PORT`.
 
 To stop the application:
 
