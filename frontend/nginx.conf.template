@@ -5,11 +5,11 @@ events {
 http {
     include mime.types;
     server {
-        listen       3300;
+        listen $FRONTEND_PORT;
         root   /opt/frontend;
         index  index.html index.htm;
         location / {
-            try_files $uri /index.html;
+            try_files ${DOLLAR}uri /index.html;
         }
     }
 }

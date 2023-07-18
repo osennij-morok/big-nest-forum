@@ -14,9 +14,12 @@ services:
 
   frontend:
     image: big-nest-forum/frontend
-    build: ./frontend
+    build: 
+      context: ./frontend
+      args:
+        - FRONTEND_PORT=${FRONTEND_PORT}
     ports:
-      - "3300:3300"
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     env_file: .env
 
   db:
