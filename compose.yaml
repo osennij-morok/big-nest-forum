@@ -23,12 +23,13 @@ services:
     env_file: .env
 
   db:
-    image: postgres
+    image: big-nest-forum/db
+    build: ./db
     ports:
       - "5432:5432"
-    #environment:
-    #  POSTGRES_PASSWORD: 's3cret'
     volumes:
       - './db/pgdata/:/var/lib/postgresql/data/'
+    environment:
+      POSTGRES_DB: big_nest_forum
     env_file: .env
 
