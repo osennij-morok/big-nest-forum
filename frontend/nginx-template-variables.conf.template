@@ -1,3 +1,0 @@
-map $frontend_port {
-    default $FRONTEND_PORT;
-}
