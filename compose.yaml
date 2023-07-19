@@ -1,0 +1,24 @@
+services:
+
+  backend:
+    image: big-nest-forum/backend
+    build: ./backend
+    ports:
+      - "3033:3000"
+
+  frontend:
+    image: big-nest-forum/frontend
+    build: ./frontend
+    ports:
+      - "8088:8080"
+
+  db:
+    image: postgres
+    ports:
+      - "5454:5432"
+    environment:
+      POSTGRES_PASSWORD: 's3cret'
+    volumes:
+      - './db/pgdata/:/var/lib/postgresql/data/'
+
+    #cache:

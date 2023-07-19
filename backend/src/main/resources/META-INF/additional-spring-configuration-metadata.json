@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "tokenSigningPassword",
+      "type": "java.lang.String",
+      "description": "Description for tokenSigningPassword."
+    }
+  ]
+}
