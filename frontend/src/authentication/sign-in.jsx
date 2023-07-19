@@ -89,6 +89,8 @@ export default function SignIn() {
     setCaptchaToken(null)
   }
 
+  console.log(config)
+
   // const canSignIn = (username.trim().length != null)
   //   && (password.trim().length != null)
 

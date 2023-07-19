@@ -5,7 +5,7 @@ const config = {
   allowUsersAuthentication: true,
   hcaptchaSitekey: env('HCAPTCHA_SITE_KEY'),
   recaptchaSitekey: env('RECAPTCHA_SITE_KEY'),
-  requireCaptcha: env('REQUIRE_CAPTCHA'),
+  requireCaptcha: env('REQUIRE_CAPTCHA') === 'true',
 }
 
 export default {

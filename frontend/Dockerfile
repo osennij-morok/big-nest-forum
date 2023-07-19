@@ -3,7 +3,6 @@ WORKDIR /opt/frontend
 COPY . .
 COPY ./.env ./.env
 RUN npm install --silent
-RUN npm install -g react-scripts --silent
 RUN npm run build
 
 FROM nginx:1.23.4-alpine
