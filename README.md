@@ -31,6 +31,8 @@ You have to create .env file with the folowing environment variables:
 
 Every line of the .env file must have the format *VARIABLE_NAME=variable-value*.
 
+By default an account with username `admin` and password `1234` is registered with the role `owner`. You can use it for configuration via dashboard.
+
 # Building and running
 
 Build the backend separately. You can use my script:
