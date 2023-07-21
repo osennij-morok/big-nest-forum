@@ -9,26 +9,17 @@ export default function Navbar() {
   const username = useAuthStore((state) => state.username)
   const onSignedOut = useAuthStore((state) => state.onSignedOut)
 
-  //// temporary...
-  const onSignedIn = useAuthStore((state) => state.onSignedIn)
-  ////
-
-  const signIn = () => {
-    // onSignedIn('john_doe1234', 'ADMIN')
-  }
-
   const navigate = useNavigate()
 
   const signOut = async () => {
     await accountApi.signOut()
     onSignedOut()
-    navigate('/')
+    navigate('/forums')
   }
 
   const showAuthButtons = !isAuthenticated && config.allowUsersAuthentication
 
   const signUpButton = <Link className="button is-success" to="/signUp">Зарегистрироваться</Link>
-  // const signInButton = <button className="button is-success" onClick={signIn}>Войти</button>
   const signInButton = <Link className="button is-success" to="/signIn">Войти</Link>
   const signOutButton = <button className="button is-light" onClick={signOut}>Выйти</button>
 
@@ -45,10 +36,10 @@ export default function Navbar() {
     </div>
   </div>
 
-  return <nav className="navbar is-info"
+  return <nav 
+    className="navbar is-info"
     role="navigation"
     aria-label="main navigation"
-    // style={{ marginBottom: "2em" }}
   >
     <div className="navbar-brand">
       <a href="#" className="navbar-item">

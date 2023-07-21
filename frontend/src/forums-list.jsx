@@ -10,16 +10,16 @@ export default function Forums() {
 
   const forumsRows = forums?.map(forum => <tr key={forum.id}>
     <td><Link to={'/' + forum.id}>{forum.name}</Link> /{forum.id}/</td>
-    <td>10</td>
-    <td>10</td>
+    {/* <td>10</td>
+    <td>10</td> */}
   </tr>)
 
   const forumsTable = <table className="table is-fullwidth">
     <thead>
       <tr>
         <th>Форум</th>
-        <th>Тредов</th>
-        <th>Постов</th>
+        {/* <th>Тредов</th>
+        <th>Постов</th> */}
       </tr>
     </thead>
     <tbody>
