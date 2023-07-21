@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -60,14 +59,29 @@ public class ApplicationSecurity {
                 .requestMatchers(HttpMethod.GET, "/thread").permitAll()
 
                 .requestMatchers(HttpMethod.PUT, "/account/password").authenticated()
-                .requestMatchers("/account").hasRole("ADMIN")
-                .requestMatchers("/admin/*").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/*/post").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/*/thread").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/forum").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/forum").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/forum").hasRole("ADMIN")
-                .anyRequest().hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/account")
+                    .hasAnyRole("OWNER", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/account/*/role")
+                    .hasRole("OWNER")
+                .requestMatchers(HttpMethod.PUT, "/account/*/blocking")
+                    .hasAnyRole("OWNER", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/account/*/blocking")
+                    .hasAnyRole("OWNER")
+
+                .requestMatchers("/admin/*")
+                    .hasAnyRole("OWNER", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/*/post")
+                    .hasAnyRole("OWNER", "ADMIN", "MODER")
+                .requestMatchers(HttpMethod.DELETE, "/*/thread")
+                    .hasAnyRole("OWNER", "ADMIN", "MODER")
+                .requestMatchers(HttpMethod.POST, "/forum")
+                    .hasAnyRole("OWNER", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/forum")
+                    .hasAnyRole("OWNER", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/forum")
+                    .hasAnyRole("OWNER", "ADMIN")
+                .anyRequest()
+                    .hasAnyRole("OWNER", "ADMIN")
 //                .requestMatchers("/**").permitAll()
 
                 .and()

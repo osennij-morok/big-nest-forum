@@ -1,0 +1,11 @@
+.dashboard {
+  /* padding: 1em; */
+}
+
+table.accounts-table td {
+  vertical-align: middle;
+}
+
+.dashboard-body {
+  min-height: 60vh;
+}

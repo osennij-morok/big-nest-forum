@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from './assets/vecteezy1.jpg'
 import config from "./config";
 import { useAuthStore } from "./store/authentication";
@@ -17,9 +17,12 @@ export default function Navbar() {
     // onSignedIn('john_doe1234', 'ADMIN')
   }
 
+  const navigate = useNavigate()
+
   const signOut = async () => {
     await accountApi.signOut()
     onSignedOut()
+    navigate('/')
   }
 
   const showAuthButtons = !isAuthenticated && config.allowUsersAuthentication
@@ -45,7 +48,8 @@ export default function Navbar() {
   return <nav className="navbar is-info"
     role="navigation"
     aria-label="main navigation"
-    style={{ marginBottom: "2em" }}>
+    // style={{ marginBottom: "2em" }}
+  >
     <div className="navbar-brand">
       <a href="#" className="navbar-item">
         <img src={logo} alt="Логотип"

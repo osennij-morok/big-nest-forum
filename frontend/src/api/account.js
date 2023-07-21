@@ -3,60 +3,6 @@ import jwtDecode from "jwt-decode"
 import config from '../config'
 import * as api from './api'
 
-// const accounts = [
-//   {
-//     id: 1,
-//     username: 'john1111',
-//     password: 's333crett',
-//     role: 'ADMIN',
-//   },
-//   {
-//     id: 2,
-//     username: 'andy3333',
-//     password: 's33cret',
-//     role: 'USER',
-//   },
-// ]
-
-// function assertNotExists(username) {
-//   const storedAccount = accounts.find(account => account.username === username)
-//   if (storedAccount) {
-//     throw {
-//       message: "Account with such username already exists",
-//       code: "USERNAME_ALREADY_EXISTS",
-//     }
-//   }
-// }
-
-// function assertCanSignIn(username, password) {
-//   const storedAccount = accounts.find(account => account.username === username)
-//   if (!storedAccount) {
-//     throw {
-//       message: "Account with such username does not exist",
-//       code: "USERNAME_NOT_EXIST",
-//     }
-//   }
-//   if (storedAccount.password != password) {
-//     throw {
-//       message: "Incorrect password",
-//       code: "INCORRECT_PASSWORD,"
-//     }
-//   }
-//   return storedAccount
-// }
-
-// function nextId() {
-//   return accounts[accounts.length - 1].id + 1
-// }
-
-// function addAccount(username, password) {
-//   accounts.push({
-//     id: nextId(),
-//     username,
-//     password,
-//     role: 'USER',
-//   })
-// }
 
 export async function signIn(username, password, captchaToken) {
   // const storedAccount = assertCanSignIn(username, password)
@@ -171,3 +117,165 @@ export async function changePassword(newPassword) {
     }
   }
 }
+
+export async function getAll() {
+  const reqConfig = { headers: api.createAuthHeaders() }
+  try {
+    return (await axios.get(`${config.serverUrl}/account`, reqConfig)).data
+  } catch (err) {
+    if (err.response.status == HttpStatusCode.Forbidden) {
+      await refresh()
+      const reqConfig = { headers: api.createAuthHeaders() }
+      try {
+        return (await axios.get(`${config.serverUrl}/account`, reqConfig)).data
+      } catch (err) {
+        throw {
+          message: "Невозможно получить список аккаунтов",
+          code: 'OTHER_ERROR',
+          parent: err,
+        }
+      }
+    }
+    throw {
+      message: "Невозможно получить список аккаунтов",
+      code: 'OTHER_ERROR',
+      parent: err,
+    }
+  }
+}
+
+export async function blockAccount(accountId) {
+  const url = `${config.serverUrl}/account/${accountId}/blocking`
+  const reqConfig = { headers: api.createAuthHeaders() }
+  try {
+    return (await axios.post(url, {}, reqConfig)).data
+  } catch (err) {
+    if (err.response.status == HttpStatusCode.Forbidden) {
+      await refresh()
+      const reqConfig = { headers: api.createAuthHeaders() }
+      try {
+        return (await axios.post(url, {}, reqConfig)).data
+      } catch (err) {
+        throw {
+          message: "Невозможно заблокировать аккаунт",
+          code: 'OTHER_ERROR',
+          parent: err,
+        }
+      }
+    }
+    throw {
+      message: "Невозможно заблокировать аккаунт",
+      code: 'OTHER_ERROR',
+      parent: err,
+    }
+  }
+}
+
+export async function unblockAccount(accountId) {
+  const url = `${config.serverUrl}/account/${accountId}/blocking`
+  const reqConfig = { headers: api.createAuthHeaders() }
+  try {
+    return (await axios.delete(url, reqConfig)).data
+  } catch (err) {
+    if (err.response.status == HttpStatusCode.Forbidden) {
+      await refresh()
+      const reqConfig = { headers: api.createAuthHeaders() }
+      try {
+        return (await axios.delete(url, reqConfig)).data
+      } catch (err) {
+        throw {
+          message: "Невозможно разблокировать аккаунт",
+          code: 'OTHER_ERROR',
+          parent: err,
+        }
+      }
+    }
+    throw {
+      message: "Невозможно разблокировать аккаунт",
+      code: 'OTHER_ERROR',
+      parent: err,
+    }
+  }
+}
+
+export async function changeRole(accountId, targetRole) {
+  const url = `${config.serverUrl}/account/${accountId}/role`
+  const reqConfig = { headers: api.createAuthHeaders() }
+  try {
+    return (await axios.put(url, { role: targetRole }, reqConfig)).data
+  } catch (err) {
+    if (err.response.status == HttpStatusCode.Forbidden) {
+      await refresh()
+      const reqConfig = { headers: api.createAuthHeaders() }
+      try {
+        return (await axios.put(url, { role: targetRole }, reqConfig)).data
+      } catch (err) {
+        throw {
+          message: "Невозможно изменить роль",
+          code: 'OTHER_ERROR',
+          parent: err,
+        }
+      }
+    }
+    throw {
+      message: "Невозможно изменить роль",
+      code: 'OTHER_ERROR',
+      parent: err,
+    }
+  }
+}
+
+// const accounts = [
+//   {
+//     id: 1,
+//     username: 'john1111',
+//     password: 's333crett',
+//     role: 'ADMIN',
+//   },
+//   {
+//     id: 2,
+//     username: 'andy3333',
+//     password: 's33cret',
+//     role: 'USER',
+//   },
+// ]
+
+// function assertNotExists(username) {
+//   const storedAccount = accounts.find(account => account.username === username)
+//   if (storedAccount) {
+//     throw {
+//       message: "Account with such username already exists",
+//       code: "USERNAME_ALREADY_EXISTS",
+//     }
+//   }
+// }
+
+// function assertCanSignIn(username, password) {
+//   const storedAccount = accounts.find(account => account.username === username)
+//   if (!storedAccount) {
+//     throw {
+//       message: "Account with such username does not exist",
+//       code: "USERNAME_NOT_EXIST",
+//     }
+//   }
+//   if (storedAccount.password != password) {
+//     throw {
+//       message: "Incorrect password",
+//       code: "INCORRECT_PASSWORD,"
+//     }
+//   }
+//   return storedAccount
+// }
+
+// function nextId() {
+//   return accounts[accounts.length - 1].id + 1
+// }
+
+// function addAccount(username, password) {
+//   accounts.push({
+//     id: nextId(),
+//     username,
+//     password,
+//     role: 'USER',
+//   })
+// }

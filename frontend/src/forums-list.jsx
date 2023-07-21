@@ -42,7 +42,7 @@ export default function Forums() {
             {forumsRows && forumsTable}
           </div>
         </div>
-        {(userRole === 'ADMIN') && createForumForm}
+        {(userRole === 'ADMIN' || userRole === 'OWNER') && createForumForm}
       </div>
     </div>
   </>

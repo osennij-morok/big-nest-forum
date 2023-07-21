@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.gastipatis.bignestforum.converter.AccountRoleConverter;
 
 @Getter
 @AllArgsConstructor
@@ -27,6 +28,7 @@ public class Account {
     private Boolean blocked;
 
     @Enumerated(EnumType.STRING)
+    @Convert(converter = AccountRoleConverter.class)
     @Column(name = "role", nullable = false)
     private AccountRole role;
 }

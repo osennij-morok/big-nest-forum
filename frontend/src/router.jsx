@@ -7,6 +7,8 @@ import Forums from "./forums-list";
 import Posts from "./posts-list";
 import Threads from "./thread/threads-list";
 import AccountDashboard from "./personal-area/account-dashboard";
+import ChangePasswordPage from "./personal-area/change-password-page";
+import AccountsManagement from "./personal-area/accounts-management";
 
 export default createBrowserRouter([
   {
@@ -14,6 +16,20 @@ export default createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "account",
+        element: <AccountDashboard />,
+        children: [
+          {
+            path: 'change-password',
+            element: <ChangePasswordPage />,
+          },
+          {
+            path: 'accounts-management',
+            element: <AccountsManagement />,
+          },
+        ],
+      },
       // {
       //     path: "/",
       // },
@@ -36,10 +52,6 @@ export default createBrowserRouter([
       {
         path: "signUp",
         element: <SignUp />,
-      },
-      {
-        path: "account",
-        element: <AccountDashboard />,
       },
     ],
   },

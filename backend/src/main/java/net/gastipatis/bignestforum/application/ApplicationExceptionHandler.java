@@ -4,9 +4,8 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.gastipatis.bignestforum.application.exception.AccountAlreadyExistsException;
-import net.gastipatis.bignestforum.application.exception.EntityValidationException;
-import net.gastipatis.bignestforum.application.exception.InvalidCaptchaTokenException;
+import net.gastipatis.bignestforum.application.exception.*;
+import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.*;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -93,6 +92,17 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return super.handleErrorResponseException(ex, headers, status, request);
     }
 
+    @ExceptionHandler({ConversionFailedException.class})
+    protected ResponseEntity<?> handleConversionFailure(ConversionFailedException ex) {
+        ThrowableProblem problem = Problem.builder()
+                .withTitle("Bad Request")
+                .withStatus(Status.BAD_REQUEST)
+                .withDetail(String.format("Value %s cannot be converted to type %s",
+                        ex.getValue(), ex.getTargetType()))
+                .build();
+        return problemResponseEntity(problem, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler({AuthenticationException.class})
     protected ResponseEntity<?> handleAuthenticationFailure(AuthenticationException ex) {
         throw ex;
@@ -139,6 +149,28 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .withStatus(Status.FORBIDDEN)
                 .withDetail("Account with the specified credentials already exists")
                 .with("code", "ACCOUNT_ALREADY_EXISTS")
+                .build();
+        return problemResponseEntity(problem, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler({AccountNotExistsException.class})
+    protected ResponseEntity<Problem> handleAccountNotExists(AccountNotExistsException ex) {
+        ThrowableProblem problem = Problem.builder()
+                .withTitle("Account Not Exists")
+                .withStatus(Status.FORBIDDEN)
+                .withDetail("Account with the specified credentials do not exist")
+                .with("code", "ACCOUNT_NOT_EXISTS")
+                .build();
+        return problemResponseEntity(problem, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler({SubordinationException.class})
+    protected ResponseEntity<Problem> handleSubordinationFailure(SubordinationException ex) {
+        ThrowableProblem problem = Problem.builder()
+                .withTitle("Subordination Violated")
+                .withStatus(Status.FORBIDDEN)
+                .withDetail("Cannot manage data of higher or equal rank accounts")
+                .with("code", "SUBORDINATION_VIOLATED")
                 .build();
         return problemResponseEntity(problem, HttpStatus.FORBIDDEN);
     }

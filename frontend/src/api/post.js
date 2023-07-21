@@ -118,17 +118,16 @@ export function usePostsPage(forumId, threadId, fromId, defaultLimit) {
 export async function createPost(post, forumId) {
   const headers = api.createAuthHeaders()
   const requestConfig = headers ? { headers } : undefined
+  const url = `${config.serverUrl}/${forumId}/post`
   try {
-    return await axios
-      .post(`${config.serverUrl}/${forumId}/post`, post, requestConfig)
+    return await axios.post(url, post, requestConfig)
   } catch(err) {
     if (err.response.status == HttpStatusCode.Forbidden) {
       await refresh()
       const headers = api.createAuthHeaders()
       const requestConfig = headers ? { headers } : undefined
       try {
-        return await axios
-          .post(`${config.serverUrl}/${forumId}/post`, post, requestConfig)
+        return await axios.post(url, post, requestConfig)
       } catch (err) {
         throw {
           message: "Невозможно создать пост",

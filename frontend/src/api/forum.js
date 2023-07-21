@@ -43,13 +43,14 @@ export function useForum(forumId) {
 }
 
 export async function createForum(forum) {
+  const url = `${config.serverUrl}/forum`
   try {
-    await axios.post(`${config.serverUrl}/forum`, forum, { headers: api.createAuthHeaders() })
+    await axios.post(url, forum, { headers: api.createAuthHeaders() })
   } catch (err) {
     if (err.response.status == HttpStatusCode.Forbidden) {
       await refresh()
       try {
-        await axios.post(url, { headers: api.createAuthHeaders() })
+        await axios.post(url, forum, { headers: api.createAuthHeaders() })
       } catch (err) {
         throw {
           message: "Невозможно создать форум",

@@ -33,7 +33,7 @@ export default function Post({ post, role, onClickDelete }) {
               </div>
             </div>
           </div>
-          {(role === 'ADMIN') && (
+          {(role === 'ADMIN' || role === 'MODER' || role === 'OWNER') && (
             <div className="media-right">
               <button className="delete" onClick={() => onClickDelete(post.id)}></button>
             </div>
