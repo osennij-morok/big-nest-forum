@@ -37,9 +37,7 @@ public interface AccountRepository extends CrudRepository<Account, Long>, Accoun
 
     @Modifying
     @Transactional
-//    @Query("update account set role = cast(:targetRole as net.gastipatis.bignestforum.domain.account.AccountRole) where id = :id")
-    //@Query("update account set role = :#{#targetRole?.toString()} where id = :id")
-    @Query("update account set role = :#{#targetRole} where id = :id")
+    @Query("update account set role = :targetRole where id = :id")
     int changeAccountRole(@Param("targetRole") AccountRole targetRole,
                           @Param("id") Long id);
 }
